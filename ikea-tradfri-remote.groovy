@@ -2,14 +2,10 @@ import physicalgraph.zigbee.zcl.DataType
 
 metadata {
     definition (name: "IKEA TRADFRI Remote control", namespace: "richmercer", author: "Richard Mercer") {
-        capability "Actuator"
         capability "Battery"
-        capability "Button"
-        capability "Holdable Button"        
         capability "Configuration"
         capability "Refresh"
-        capability "Sensor"
-        
+                
         command "enrollResponse"
 
         fingerprint profileId: "0104", inClusters: "0000, 0001, 0003, 0009, 0B05, 1000", outClusters: "0003, 0004, 0005, 0006, 0008, 0019, 1000", manufacturer: "IKEA of Sweden", model: "TRADFRI remote control", deviceJoinName: "TRADFRI remote control"
@@ -18,16 +14,11 @@ metadata {
 
     preferences {
         section {
-            input ("holdTime", "number", title: "Minimum time in seconds for a press to count as \"held\"", defaultValue: 1, displayDuringSetup: false)
+            
         }
     }
 
     tiles {
-        standardTile("button", "device.button", width: 2, height: 2) {
-            state "default", label: "", icon: "st.unknown.zwave.remote-controller", backgroundColor: "#ffffff"
-            state "button 1 pushed", label: "pushed #1", icon: "st.unknown.zwave.remote-controller", backgroundColor: "#00A0DC"
-        }
-
         valueTile("battery", "device.battery", decoration: "flat", inactiveLabel: false) {
             state "battery", label:'${currentValue}% battery', unit:""
         }
@@ -35,8 +26,8 @@ metadata {
         standardTile("refresh", "device.refresh", inactiveLabel: false, decoration: "flat") {
             state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
         }
-        main (["button"])
-        details(["button", "battery", "refresh"])
+        main (["battery"])
+        details(["battery", "refresh"])
     }
 }
 
@@ -180,6 +171,7 @@ def configure() {
                 "zdo bind 0x${device.deviceNetworkId} 4 1 6 {${device.zigbeeId}} {}", "delay 300"
         ]
     }
+    
     return zigbee.onOffConfig() +
             zigbee.levelConfig() +
             zigbee.configureReporting(zigbee.POWER_CONFIGURATION_CLUSTER, 0x20, DataType.UINT8, 30, 21600, 0x01) +
