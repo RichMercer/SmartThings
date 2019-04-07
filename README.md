@@ -1,4 +1,6 @@
 # SmartThings
 Repository for SmartThings devices and code.
 
-At this time the 5 button remote still will not work with SmartThings. I'm leaving this here in case IKEA decide to update the button firmware, but currently will only talk directly with the bulbs and not the hub.
+## IKEA TRÅDFRI Remote control - 5 button - 503.522.74 (or 203.033.17)
+ * Pairing with SmartThings and battery information is working
+ * Currently, buttons are not working (device does not send any information), waiting for IEKA firmware upgrade?
